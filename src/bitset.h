@@ -22,7 +22,9 @@ class BitSet {
 
   // Allocated, but no bits set
   BitSet(const size_t size) {
-    this->Allocate(size);
+    allocated_ = (size >> 3) + 1;
+    bits_ = new unsigned char[allocated_];
+    size_ = size;
   }
 
   ~BitSet() {
@@ -35,7 +37,7 @@ class BitSet {
   BitSet(const BitSet& rhs) : allocated_(rhs.allocated_), size_(rhs.size_) {
     if (allocated_ != 0) {
       bits_ = new unsigned char[allocated_];
-      memcpy(bits_, rhs.bits_, (size_ >> 3));
+      memcpy(bits_, rhs.bits_, (size_ >> 3) + 1);
     }
   }
 
@@ -44,17 +46,21 @@ class BitSet {
       allocated_ = rhs.allocated_;
       size_ = rhs.size_;
       bits_ = new unsigned char[allocated_];
-      memcpy(bits_, rhs.bits_, (size_ >> 3));
+      memcpy(bits_, rhs.bits_, (size_ >> 3) + 1);
     }
     return *this;
   }
 
-  bool IsSet(const size_t position) const {
-    return (bits_[position >> 3] & (1 << (position & 0x7)));
-  }
-
   void Set(const size_t position) {
     bits_[position >> 3] |= (1 << (position & 0x7));
+  }
+
+  size_t GetSize() const {
+    return size_;
+  }
+
+  bool IsSet(const size_t position) const {
+    return (bits_[position >> 3] & (1 << (position & 0x7)));
   }
 
   friend std::ostream& operator<<(std::ostream& out, const BitSet& bit_set) {
@@ -65,12 +71,6 @@ class BitSet {
   }
 
  private:
-  void Allocate(const size_t size) {
-    allocated_ = size / 8 + 1;
-    bits_ = new unsigned char[allocated_];
-    size_ = size;
-  }
-
   unsigned char* bits_ = nullptr;
 
   // Bytes allocated

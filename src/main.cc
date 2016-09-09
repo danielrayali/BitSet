@@ -49,7 +49,9 @@ void printing() {
     bit_set.Set(rand() % 100);
   }
 
-  cout << bit_set;
+  BitSet bit_set2 = bit_set;
+  BitSet bit_set3 = bit_set2;
+  cout << bit_set << bit_set2 << bit_set3;
 }
 
 int main(int argc, char* argv[]) {
