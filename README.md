@@ -1,4 +1,4 @@
-This has only been tested on Ubuntu Linux using Intel i5 Dual-Core @ 3.20GHz, 12GiB memory.
+This has only been tested on Ubuntu Linux using Intel i5 Quad-Core @ 3.20GHz, 12GiB memory.
 
 Building
 --------
