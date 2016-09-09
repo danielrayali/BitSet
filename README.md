@@ -2,10 +2,10 @@ This has only been tested on Ubuntu Linux using Intel i5 Dual-Core @ 3.20GHz, 12
 
 Building
 --------
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
+- $ mkdir build
+- $ cd build
+- $ cmake ..
+- $ make
 
 License
 -------
