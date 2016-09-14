@@ -1,19 +1,20 @@
 #include <iostream>
 #include <bitset>
+#include <stdexcept>
 #include "bitset.h"
 #include "timing.h"
 
 using namespace std;
 
 void timing() {
-  BitSet my_bitset(1000000);
-  std::bitset<1000000> std_bitset;
+  BitSet my_bitset(10000000);
+  std::bitset<10000000> std_bitset;
 
   uint64 my_set_total = 0, std_set_total = 0;
   uint64 my_read_total = 0, std_read_total = 0;
   uint64 before = 0, after = 0;
-  for (int i = 0; i < 1000000; ++i) {
-    size_t index = rand() % 1000000;
+  for (int i = 0; i < 10000000; ++i) {
+    size_t index = rand() % 10000000;
     before = GetTimeMs64();
     my_bitset.Set(index);
     after = GetTimeMs64();
@@ -23,7 +24,6 @@ void timing() {
     my_bitset.IsSet(index);
     after = GetTimeMs64();
     my_read_total += (after - before);
-
 
     before = GetTimeMs64();
     std_bitset[index] = 1;
@@ -52,6 +52,19 @@ void printing() {
   BitSet bit_set2 = bit_set;
   BitSet bit_set3 = bit_set2;
   cout << bit_set << bit_set2 << bit_set3;
+}
+
+void moving() {
+  BitSet bit_set(1000);
+
+  for (size_t i = 0; i < 50; ++i) {
+    bit_set.Set(rand() % 1000);
+  }
+
+  BitSet new_set = std::move(bit_set);
+  if (new_set.GetSize() != 1000 || bit_set.GetSize() != 0) {
+    throw std::runtime_error("Problem with moving");
+  }
 }
 
 int main(int argc, char* argv[]) {

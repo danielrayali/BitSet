@@ -51,10 +51,32 @@ class BitSet {
     return *this;
   }
 
+  BitSet(BitSet&& rhs) {
+    if (this == &rhs) { return; }
+    allocated_ = rhs.allocated_;
+    bits_ = rhs.bits_;
+    size_ = rhs.size_;
+    rhs.allocated_ = 0;
+    rhs.bits_ = nullptr;
+    rhs.size_ = 0;
+  }
+
+  BitSet& operator=(BitSet&& rhs) {
+    if (this == &rhs) { return  *this; }
+    allocated_ = rhs.allocated_;
+    bits_ = rhs.bits_;
+    size_ = rhs.size_;
+    rhs.allocated_ = 0;
+    rhs.bits_ = nullptr;
+    rhs.size_ = 0;
+    return *this;
+  }
+
   void Set(const size_t position) {
     bits_[position >> 3] |= (1 << (position & 0x7));
   }
 
+  // Returns number of bits
   size_t GetSize() const {
     return size_;
   }
