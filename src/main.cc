@@ -1,20 +1,22 @@
 #include <iostream>
 #include <bitset>
 #include <stdexcept>
+#include <ctime>
+#include <cstdint>
 #include "bitset.h"
 #include "timing.h"
 
 using namespace std;
 
 void timing() {
-  BitSet my_bitset(10000000);
-  std::bitset<10000000> std_bitset;
+  BitSet my_bitset(1000000);
+  std::bitset<1000000> std_bitset;
 
   uint64 my_set_total = 0, std_set_total = 0;
   uint64 my_read_total = 0, std_read_total = 0;
   uint64 before = 0, after = 0;
-  for (int i = 0; i < 10000000; ++i) {
-    size_t index = rand() % 10000000;
+  for (int i = 0; i < 1000000; ++i) {
+    size_t index = rand() % 1000000;
     before = GetTimeMs64();
     my_bitset.Set(index);
     after = GetTimeMs64();
@@ -43,7 +45,7 @@ void timing() {
 }
 
 void printing() {
-  srand(time(0));
+  srand(static_cast<uint32_t>(time(0)));
   BitSet bit_set(100);
   for (size_t i = 0; i < 50; ++i) {
     bit_set.Set(rand() % 100);

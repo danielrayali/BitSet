@@ -82,7 +82,7 @@ class BitSet {
   }
 
   bool IsSet(const size_t position) const {
-    return (bits_[position >> 3] & (1 << (position & 0x7)));
+    return (bits_[position >> 3] & (1 << (position & 0x7))) != 0;
   }
 
   friend std::ostream& operator<<(std::ostream& out, const BitSet& bit_set) {
@@ -90,6 +90,7 @@ class BitSet {
       out << bit_set.IsSet(i);
     }
     out << std::endl;
+    return out;
   }
 
  private:
